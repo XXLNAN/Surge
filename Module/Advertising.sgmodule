@@ -95,22 +95,26 @@ URL-REGEX,^https?:\/\/api\.m\.jd.com\/client\.action\?functionId=start,REJECT-TI
 ^https?:\/\/api\.zhihu\.com\/\w+\/\d+\/comments\/featured-comment-ad - reject
 ^https?:\/\/www\.zhihu\.com\/api\/v\d\/answers/\d+/recommendations - reject
 
-[Map Local]
-^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Rewrite/WeChat.json"
-
-[MITM]
-hostname = gw.alicdn.com,heic.alicdn.com,acs.m.taobao.com,issuecdn.baidupcs.com,pan.baidu.com,newclient.map.baidu.com,mime.baidu.com,www.youtube.com,s.youtube.com,api.m.jd.com,ms.jr.jd.com,4gimg.map.qq.com,r.inews.qq.com,news.ssp.qq.com,mp.weixin.qq.com,www.zhihu.com,api.zhihu.com
-
-[URL Rewrite]
 # > Douyin
 ^https?:\/\/(.*)\.amemv\.com\/aweme\/v2\/(follow\/)?feed\/ https://$1.amemv.com/aweme/v1/$2feed/ header
 
+(^https?:\/\/(?!redirector)[\w-]+\.googlevideo\.com\/((?!dclk_video_ads).)+)(ctier=L)(&.+) $1$3 302
+^https?:\/\/[\w-]+\.googlevideo\.com\/((?!dclk_video_ads).)+&(oad|ctier) - reject
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads - reject
+^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) - reject
+^https?:\/\/\s.youtube.com/api/stats/qoe?.*adformat= - reject
+
 [Map Local]
+^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Rewrite/WeChat.json"
+
 # 知乎其他广告拦截
 ^https?:\/\/api\.zhihu\.com\/(notifications\/v\d\/count|v\d\/package|me\/guides|drama\/living-info|ad|fringe|commercial|market\/popovers|.*featured-comment-ad) data="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/blank/blank_dict.json"
 
+[MITM]
+hostname = gw.alicdn.com,heic.alicdn.com,acs.m.taobao.com,issuecdn.baidupcs.com,pan.baidu.com,newclient.map.baidu.com,mime.baidu.com,www.youtube.com,s.youtube.com,api.m.jd.com,ms.jr.jd.com,4gimg.map.qq.com,r.inews.qq.com,news.ssp.qq.com,mp.weixin.qq.com,www.zhihu.com,api.zhihu.com, www.zhihu.com,api.zhihu.com,%APPEND% *.googlevideo.com,www.youtube.com,s.youtube.com,*.amemv.com
+
 [Script]
-# > Douyin - *.amemv.com
+# > Douyin
 douyin = type=http-response,pattern=^https?:\/\/.*\.amemv\.com\/aweme\/v1\/(feed|mix\/aweme|aweme\/post|(multi\/)?aweme\/detail|follow\/feed|nearby\/feed|search\/item|general\/search\/single|hot\/search\/video\/list)\/,requires-body=1,max-size=-1,script-path=https://raw.githubusercontent.com/Choler/Surge/master/Script/douyin.js
 
 # > Zhihu
@@ -121,14 +125,3 @@ douyin = type=http-response,pattern=^https?:\/\/.*\.amemv\.com\/aweme\/v1\/(feed
 知乎_热搜去广告 = type=http-response,requires-body=1,max-size=0,pattern=^https?:\/\/api\.zhihu\.com\/search\/top_search\/tabs\/hot\/items,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zhihu/zhihu_plus.js
 知乎_热榜去广告 = type=http-response,requires-body=1,max-size=0,pattern=^https?:\/\/api\.zhihu\.com\/topstory\/hot-lists?(\?|\/),script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zhihu/zhihu_plus.js
 知乎_评论去广告 = type=http-response,requires-body=1,max-size=0,pattern=^https?:\/\/api\.zhihu\.com\/(comment_v5\/)?(answers|comments?|articles|pins)\/\d+\/(root_|child_)?comments?,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zhihu/zhihu_plus.js
-
-# YouTube 视频广告
-[URL Rewrite]
-(^https?:\/\/(?!redirector)[\w-]+\.googlevideo\.com\/((?!dclk_video_ads).)+)(ctier=L)(&.+) $1$3 302
-^https?:\/\/[\w-]+\.googlevideo\.com\/((?!dclk_video_ads).)+&(oad|ctier) - reject
-^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads - reject
-^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) - reject
-^https?:\/\/\s.youtube.com/api/stats/qoe?.*adformat= - reject
-
-[MITM]
-hostname = www.zhihu.com,api.zhihu.com,%APPEND% *.googlevideo.com,www.youtube.com,s.youtube.com
