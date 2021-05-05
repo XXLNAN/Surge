@@ -1,1 +1,1 @@
-“XXL”为Surge配置文件。
+Surge自用库。
