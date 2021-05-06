@@ -1,6 +1,5 @@
 #!name=Block Advertising
-#!desc=Block Advertising for Surge iOS
-#!system=ios
+#!desc=Block Advertising （精简合并版）
 
 [Rule]
 URL-REGEX,^https?:\/\/api\.m\.jd.com\/client\.action\?functionId=start,REJECT-TINYGIF
